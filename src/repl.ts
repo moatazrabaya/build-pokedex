@@ -1,11 +1,17 @@
 
 import readline from "readline";
+import type { CLICommand } from "./command.js";
+import { commandExit } from "./command_exit.js";
 
-export function cleanInput(input: string): string[] {
-   const trimInput = input.trim();
-   const lowerCaseInput = trimInput.toLowerCase();
-   const arr = lowerCaseInput.split(" ");
-   return arr;
+
+export function getCommands(): Record<string, CLICommand> {
+  return {
+    exit: {
+      name: "exit",
+      description: "Exits the pokedex",
+      callback: commandExit,
+    },
+  };
 }
 
 export function startREPL(){
@@ -24,4 +30,11 @@ export function startREPL(){
 		
 		rl.prompt();
 	});
+}
+
+export function cleanInput(input: string): string[] {
+   const trimInput = input.trim();
+   const lowerCaseInput = trimInput.toLowerCase();
+   const arr = lowerCaseInput.split(" ");
+   return arr;
 }
