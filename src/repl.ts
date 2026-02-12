@@ -8,18 +8,20 @@ export function cleanInput(input: string): string[] {
    return arr;
 }
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  prompt: "Pokedex > ",
-});
+export function startREPL(){
+	const rl = readline.createInterface({
+	  input: process.stdin,
+	  output: process.stdout,
+	  prompt: "Pokedex > ",
+	});
 
-rl.prompt();
-
-rl.on("line", (line) => {
-	const arr = cleanInput(line);
-	if(arr.length()===0)
-		r1.prompot();
-	console.log(`Your command was: ${arr[0]}`);
 	rl.prompt();
-});
+
+	rl.on("line", (line) => {
+		const arr = cleanInput(line);
+		if(arr.length===0)
+			rl.prompt();
+		console.log(`Your command was: ${arr[0]}`);
+		rl.prompt();
+	});
+}
