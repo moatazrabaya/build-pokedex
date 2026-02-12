@@ -21,7 +21,7 @@ export function startREPL(){
 		const arr = cleanInput(line);
 		if(arr.length===0)
 			rl.prompt();
-		console.log(`Your command was: ${arr[0]}`);
+		
 		rl.prompt();
 	});
 }
