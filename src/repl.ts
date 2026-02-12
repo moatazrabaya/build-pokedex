@@ -20,14 +20,29 @@ export function startREPL(){
 	  output: process.stdout,
 	  prompt: "Pokedex > ",
 	});
-
+	
+	const commands = getCommands();
+	
 	rl.prompt();
 
 	rl.on("line", (line) => {
-		const arr = cleanInput(line);
-		if(arr.length===0)
-			rl.prompt();
+		const words = cleanInput(line);
+
+		if (words.length === 0) {
+		  rl.prompt();
+		  return;
+		}
+
+		const commandName = words[0];
+		const command = commands[commandName];
+
+		if (!command) {
+		  console.log("Unknown command");
+		  rl.prompt();
+		  return;
+		}
 		
+		command.callback(commands);	
 		rl.prompt();
 	});
 }
