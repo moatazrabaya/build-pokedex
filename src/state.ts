@@ -1,10 +1,10 @@
 
 import { createInterface, type Interface } from "readline";
-import { getCommands } from "./commands.ts";
+import { getCommands } from "./commands.js";
 
 export type State = {
-	rl: Interface;
-	registry: Record<string, CLICommand>;
+	readline: Interface;
+	commands: Record<string, CLICommand>;
 }
 
 export type CLICommand = {
