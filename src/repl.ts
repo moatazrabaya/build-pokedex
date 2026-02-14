@@ -1,41 +1,43 @@
 
-import readline from "readline";
-import type { CLICommand } from "./command.js";
-import { commandExit } from "./command_exit.js";
-import { commandHelp } from "./command_help.js";
-
+import { createInterface } from "readline";
+import { getCommands } from "./commands.js";
 
 export function startREPL(){
-	const rl = readline.createInterface({
-	  input: process.stdin,
-	  output: process.stdout,
-	  prompt: "Pokedex > ",
-	});
-	
-	const commands = getCommands();
-	
-	rl.prompt();
+	const rl = createInterface({
+		input: process.stdin,
+		output: process.stdout,
+		prompt: "Pokedex > ",
+	  });
 
-	rl.on("line", (line) => {
-		const words = cleanInput(line);
+	  rl.prompt();
 
+	  rl.on("line", async (input) => {
+		const words = cleanInput(input);
 		if (words.length === 0) {
 		  rl.prompt();
 		  return;
 		}
 
 		const commandName = words[0];
-		const command = commands[commandName];
 
-		if (!command) {
-		  console.log("Unknown command");
+		const commands = getCommands();
+		const cmd = commands[commandName];
+		if (!cmd) {
+		  console.log(
+			`Unknown command: "${commandName}". Type "help" for a list of commands.`,
+		  );
 		  rl.prompt();
 		  return;
 		}
-		
-		command.callback(commands);	
+
+		try {
+		  cmd.callback(commands);
+		} catch (e) {
+		  console.log(e);
+		}
+
 		rl.prompt();
-	});
+	  });
 }
 
 export function cleanInput(input: string): string[] {
