@@ -122,6 +122,13 @@ export type LocationArea = {
 };
 
 export type PokemonResponse = {
-	name: string,
-	base_experience: number;
+  name: string;
+  base_experience: number;
+  height: number;
+  weight: number;
+  stats: {
+    name: string;
+    value: number;
+  }[];
+  types: string[];
 };
