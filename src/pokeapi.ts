@@ -127,8 +127,10 @@ export type PokemonResponse = {
   height: number;
   weight: number;
   stats: {
-    name: string;
-    value: number;
+    base_stat: number;
+    stat: { name: string };
   }[];
-  types: string[];
+  types: {
+    "type": { name: string };
+  }[];
 };
