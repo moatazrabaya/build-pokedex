@@ -54,6 +54,29 @@ export class PokeAPI {
 
 			return data;
 	  }
+	  
+	  async fetchAreaPokemons(areaName: string): Promise<LocationArea> {
+		  const url = `${PokeAPI.baseURL}/location-area/${areaName}`;
+		  
+		  const value = this.cache.get<LocationArea>(url);
+		  
+		  if (value) {
+			  console.log("caching...");
+			  return value;
+		  }
+		  
+		  const response = await fetch(url);
+	  
+		  if (!response.ok) {
+			  throw new Error("Failed to fetch area names");
+		  }
+		  
+		  const data: LocationArea = await response.json();
+		  
+		  this.cache.add(url, data);
+
+	      return data;
+	  }
 		  
 }
 
@@ -70,4 +93,13 @@ export type ShallowLocations = {
 export type Location = {
 	  id: number;
 	  name: string;
+};
+
+export type LocationArea = {
+  pokemon_encounters: {
+    pokemon: {
+      name: string;
+      url: string;
+    };
+  }[];
 };
