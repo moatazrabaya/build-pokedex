@@ -1,6 +1,7 @@
 
 import { State } from "./state.js";
 import type { LocationArea } from "./pokeapi.js";
+
 export async function commandExplore(state: State, ...args: string[]): Promise<void> {
 	
 	  if (args.length === 0) {

@@ -8,6 +8,26 @@ export class PokeAPI {
 	  private cache = new Cache(50000);
 	  
 	  constructor() {}
+	  
+	  async fetchPokemon(name: string): Promise<PokemonResponse> {
+		  const url = `${PokeAPI.baseURL}/pokemon/${name}`;
+		  
+		  const value = this.cache.get<PokemonResponse>(url);
+		  
+		  if(value){
+			  return value;
+		  }
+		  
+		  const response = await fetch(url);
+		  
+		  if(!response.ok){
+			  throw new Error("Failed to fetch pokemon");
+		  }
+		  
+		  const data: PokemonResponse = await response.json();
+		  this.cache.add(url, data);
+		  return data;
+	  }
 
 	  async fetchLocations(pageURL?: string): Promise<ShallowLocations> {
 			const url =
@@ -16,7 +36,6 @@ export class PokeAPI {
 			const value = this.cache.get<ShallowLocations>(url);
 			
 			if(value){
-				console.log("caching...");
 				return value;
 			}
 
@@ -38,7 +57,6 @@ export class PokeAPI {
 
 			const value = this.cache.get<Location>(url);
 			if (value) {
-			  console.log("caching...");
 			  return value;
 			}
 
@@ -61,7 +79,6 @@ export class PokeAPI {
 		  const value = this.cache.get<LocationArea>(url);
 		  
 		  if (value) {
-			  console.log("caching...");
 			  return value;
 		  }
 		  
@@ -102,4 +119,9 @@ export type LocationArea = {
       url: string;
     };
   }[];
+};
+
+export type PokemonResponse = {
+	name: string,
+	base_experience: number;
 };
