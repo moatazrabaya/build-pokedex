@@ -8,7 +8,7 @@ export async function commandInspect(state: State, ...args: string[]): Promise<v
 		return;
 	  }
 
-	  const pokemonName = args[0].toLowerCase();
+	  const pokemonName = args[0];
 
 	  try {
 		   const pokemon = state.catchedPokemons[pokemonName];

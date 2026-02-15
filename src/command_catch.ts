@@ -8,7 +8,7 @@ export async function commandCatch(state: State, ...args: string[]): Promise<voi
 		return;
 	  }
 
-	  const pokemonName = args[0].toLowerCase();
+	  const pokemonName = args[0];
 
 	  console.log(`Throwing a Pokeball at ${pokemonName}...`);
 
